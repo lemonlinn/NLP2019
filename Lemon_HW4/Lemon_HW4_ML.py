@@ -31,9 +31,9 @@ class MLClass(object):
         the_dirs = os.listdir(the_path_in)
         the_df_out = pd.DataFrame()
         for dir_name in the_dirs:
-            the_filenames = os.listdir(the_path_in + dir_name)
-            for word in the_filenames[0:100]:
-                f = open(the_path_in + dir_name + '/' + word, "r", encoding='ISO-8859-1')
+            the_filenames = os.listdir(the_path_in + "/" + dir_name)
+            for word in the_filenames:
+                f = open(the_path_in + "/" + dir_name + '/' + word, "r", encoding='ISO-8859-1')
                 tmp_read = str(f.read())
                 tmp = pd.DataFrame([self.clean_up_sw(tmp_read)], columns=['body'])
                 tmp['label'] = dir_name
@@ -68,7 +68,7 @@ class MLClass(object):
         return(best_model, max_score, best_params)
         
     def MLTrainer(self):
-        the_path = '../GitHub/NLP2019/Lemon_HW4/theData/train'
+        the_path = os.path.abspath('./Documents/GitHub/NLP2019/Lemon_HW4/theData/train/')
         the_df = self.fetch_df(the_path)
         my_vec_tfidf = TfidfVectorizer()
         my_xform_tfidf = my_vec_tfidf.fit_transform(the_df.body).toarray()
